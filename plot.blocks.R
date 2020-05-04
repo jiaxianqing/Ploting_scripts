@@ -43,8 +43,8 @@ p1 <- ggplot() +
   scale_y_continuous(breaks=or_num, labels=or_sam)
 if ("Gene" %in% chr$Type){
   gene <- subset(chr, Type == "Gene")
-  p1 + 
-    geom_text_repel(data = gene, aes(x = (Xmin + Xmax)/2/1000000, y = Ymin, label = Tag), ylim = c(max(chr$Ymax), NA),
+  p1 <- p1 + 
+    geom_text_repel(data = gene, aes(x = (Xmin + Xmax)/2/1000000, y = Ymax, label = Tag), ylim = c(max(chr$Ymax), NA),
                        color = "black", fontface = "italic",show.legend = FALSE)
 }
 p1
