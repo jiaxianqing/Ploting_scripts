@@ -1,5 +1,5 @@
 # Ploting_scripts
-R scripts for image ploting. (To be continued...@20200505)
+R scripts for image ploting. 
 
 ---
 
@@ -188,3 +188,94 @@ Plot histogram with break y axis.
 
 <img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/plot_break_axis.png" div align = "center" width="25%" height="25%" />  
 
+---
+
+* `plot_pie_donut.R`
+```
+ library(ggplot2)
+ data <- data.frame(category = c('A','B','C','D','E'), 
+                    count = c(10,23,8,33,12))
+ data$category <- factor(data$category,levels=rev(c('A','B','C','D','E')))
+
+ # Calculate proportion
+ data$fraction <- round(data$count / sum(data$count), 2) * 100
+
+ # Compute the cumulative percentages (top of each rectangle)
+ data$ymax <- cumsum(data$fraction)
+
+ # Compute the bottom of each rectangle
+ data$ymin <- c(0, head(data$ymax, n=-1))
+
+ # Compute label position
+ data$labelPosition <- data$fraction/2 + data$ymin
+
+ # Generate labels
+ data$label <- paste0(data$fraction, "%")
+
+ # Define blank theme
+ blank_theme <- theme_minimal()+
+   theme(
+     axis.title.x = element_blank(),
+     axis.title.y = element_blank(),
+     axis.text.x = element_blank(),
+     axis.text.y = element_blank(),
+     panel.border = element_blank(),
+     panel.grid=element_blank(),
+     axis.ticks = element_blank(),
+     plot.title=element_text(size=14, face="bold")
+   )
+
+ # Pie and donut ploting
+ ggplot(data=data, mapping=aes(x=2,y=fraction,fill=category))+
+   geom_bar(stat="identity",color="white", width =1, linetype=1,size=1)+
+   geom_text(x=2, aes(y=labelPosition, label=label), size=4)+
+   blank_theme+
+   coord_polar(theta = "y")+
+   xlim(1.5, 2.5) # Pie plot
+   # xlim(1.5, 2.5) # Donut plot
+
+ # Note: An alternative way to plot pie or donut is by geom_rect() and coord_polar().
+```
+<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/Pie_plot.png" div align = "center" width="30%" height="30%" /><img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/donut_plot.png" div align = "center" width="60%" height="60%" />
+
+---
+
+* `plot_heatmap.R`
+```
+ library(ggplot2)
+ library(reshape2)
+ library(ggthemes)
+
+ rm(list = ls())
+ data <- read.table("heatmap_data.txt", header = T, sep = "\t")
+ data.m <- melt(data)
+
+ data.m$Gene <- factor(data.m$Gene,levels=rev(c("LPB1","MPA1","MPA2","PHO1","PHOD","PHOX","PSR1","PTA1",
+                                                "PTA2","PTA3","PTA4")))
+ data.m$variable <- factor(data.m$variable,levels=c("WT","Mutant"))
+ data.m$Treat <- factor(data.m$Treat,levels=c("With P","No P"))
+
+ ggplot(data.m, aes(variable, Gene)) + 
+   facet_grid( .~ Treat)+
+   geom_tile(aes(fill = value),colour = "white") +
+   scale_fill_gradient2('log2(TPM)',low = "blue", high = "red", mid = 'white')+
+   labs(x = "", y = "")+
+   theme(axis.text.x = element_text(vjust = 0.5, hjust = 0.5, angle = 45)) +
+   coord_fixed(ratio=1)
+
+ ggsave(file = "heatmap.pdf", height = 6, width = 3, dpi = 300, device = "pdf")
+ 
+ # Note: we can also add more theme modifications to beautify the final image, like, coord_flip().
+ ```
+<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/heatmap.png" div align = "center" width="50%" height="50%" />
+
+
+---
+P.S. 
+We all love ggplot2! A great tutorial for ggplot2: [Top50-Ggplot2-Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html).
+
+PP.S.These R scripts are frequently-used in my data visualization. I will update more. @2020-05-09
+
+</br>
+Xianqing Jia  
+jiaxq.nju@gmail.com
