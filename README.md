@@ -250,10 +250,9 @@ Plot histogram with break y axis.
  data <- read.table("heatmap_data.txt", header = T, sep = "\t")
  data.m <- melt(data)
 
- data.m$Gene <- factor(data.m$Gene,levels=rev(c("LPB1","MPA1","MPA2","PHO1","PHOD","PHOX","PSR1","PTA1",
-                                                "PTA2","PTA3","PTA4")))
+ data.m$Gene <- factor(data.m$Gene,levels=rev(c("A","B","C","D","E","F","G","H","I","J","K")))
  data.m$variable <- factor(data.m$variable,levels=c("WT","Mutant"))
- data.m$Treat <- factor(data.m$Treat,levels=c("With P","No P"))
+ data.m$Treat <- factor(data.m$Treat,levels=c("With N","No N"))
 
  ggplot(data.m, aes(variable, Gene)) + 
    facet_grid( .~ Treat)+
@@ -267,7 +266,7 @@ Plot histogram with break y axis.
  
  # Note: we can also add more theme modifications to beautify the final image, like, coord_flip().
  ```
-<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/heatmap.png" div align = "center" width="50%" height="50%" />
+<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/heatmap.png" div align = "center" width="25%" height="25%" />
 
 
 ---
