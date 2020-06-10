@@ -13,7 +13,7 @@ perl block2draw.pl -t 5 -d 5 \
     -s samples.list \ # sorted sample list
     -b blocks.csv \ # block file
     -g gene.bed \ # gene info, optional
-    -c centromere.bed \ # gene info, optional
+    -c centromere.bed \ # centromere position info, optional
     -p test.draw.pos.csv \ # for ploting
      > test.draw.csv # for ploting
 
