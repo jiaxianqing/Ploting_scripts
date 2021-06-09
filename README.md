@@ -299,7 +299,7 @@ ggsave(filename = "ARF3_data.pdf", heigh = 6, width =6, device = "pdf")
 
 
 ```
-<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/volcano_plot.jpg" div align = "center" width="25%" height="25%" />
+<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/volcano_plot.jpg" div align = "center" width="100%" height="100%" />
 
 ---
 P.S. 
