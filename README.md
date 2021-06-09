@@ -270,11 +270,16 @@ Plot histogram with break y axis.
 
 
 ---
+
+* `plot_heatmap.R`
+```
+
+---
 P.S. 
 We all love ggplot2! A great tutorial for ggplot2: [Top50-Ggplot2-Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html).
 
 PP.S.These R scripts are frequently-used in my data visualization. I will update more. @2020-05-09
 
 </br>
-Xianqing Jia  
+Xianqing Jia   
 jiaxq.nju@gmail.com
