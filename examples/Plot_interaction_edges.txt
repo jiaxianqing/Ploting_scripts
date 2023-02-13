@@ -1,0 +1,60 @@
+from	to
+Core_TF	Enzyme
+Core_TF	Nucleotide binding
+Core_TF	Reproduction
+Core_TF	Response to stress
+Core_TF	Transport
+Core_TF	Unknown
+Enzyme	Gene1
+Enzyme	Gene2
+Enzyme	Gene3
+Enzyme	Gene4
+Enzyme	Gene5
+Enzyme	Gene6
+Enzyme	Gene7
+Enzyme	Gene8
+Enzyme	Gene9
+Nucleotide binding	Gene10
+Nucleotide binding	Gene11
+Nucleotide binding	Gene12
+Nucleotide binding	Gene13
+Nucleotide binding	Gene14
+Nucleotide binding	Gene15
+Nucleotide binding	Gene16
+Nucleotide binding	Gene17
+Nucleotide binding	Gene18
+Nucleotide binding	Gene19
+Reproduction	Gene20
+Reproduction	Gene21
+Response to stress	Gene22
+Response to stress	Gene23
+Response to stress	Gene24
+Response to stress	Gene25
+Response to stress	Gene26
+Response to stress	Gene27
+Response to stress	Gene28
+Response to stress	Gene29
+Response to stress	Gene30
+Response to stress	Gene31
+Transport	Gene32
+Transport	Gene33
+Transport	Gene34
+Transport	Gene35
+Transport	Gene36
+Transport	Gene37
+Transport	Gene38
+Unknown	Gene39
+Unknown	Gene40
+Unknown	Gene41
+Unknown	Gene42
+Unknown	Gene43
+Unknown	Gene44
+Unknown	Gene45
+Unknown	Gene46
+Unknown	Gene47
+Unknown	Gene48
+Unknown	Gene49
+Unknown	Gene50
+Unknown	Gene51
+Unknown	Gene52
+Unknown	Gene53

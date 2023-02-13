@@ -1,0 +1,61 @@
+name	group	value
+Core_TF		
+Enzyme		
+Nucleotide binding		
+Reproduction		
+Response to stress		
+Transport		
+Unknown		
+Gene1	Enzyme	0.55556
+Gene2	Enzyme	0.50921
+Gene3	Enzyme	0.538112
+Gene4	Enzyme	0.554992
+Gene5	Enzyme	0.541497
+Gene6	Enzyme	0.516471
+Gene7	Enzyme	0.559918
+Gene8	Enzyme	0.550066
+Gene9	Enzyme	0.50208
+Gene10	Nucleotide binding	0.510152
+Gene11	Nucleotide binding	0.60064
+Gene12	Nucleotide binding	0.596542
+Gene13	Nucleotide binding	0.52644
+Gene14	Nucleotide binding	0.518234
+Gene15	Nucleotide binding	0.509383
+Gene16	Nucleotide binding	0.512382
+Gene17	Nucleotide binding	0.508319
+Gene18	Nucleotide binding	0.541127
+Gene19	Nucleotide binding	0.580301
+Gene20	Reproduction	0.522903
+Gene21	Reproduction	0.583688
+Gene22	Response to stress	0.516159
+Gene23	Response to stress	0.514214
+Gene24	Response to stress	0.518161
+Gene25	Response to stress	0.501996
+Gene26	Response to stress	0.513666
+Gene27	Response to stress	0.578009
+Gene28	Response to stress	0.566384
+Gene29	Response to stress	0.512853
+Gene30	Response to stress	0.519211
+Gene31	Response to stress	0.535852
+Gene32	Transport	0.553784
+Gene33	Transport	0.543951
+Gene34	Transport	0.522011
+Gene35	Transport	0.505053
+Gene36	Transport	0.520017
+Gene37	Transport	0.533661
+Gene38	Transport	0.500529
+Gene39	Unknown	0.563825
+Gene40	Unknown	0.506421
+Gene41	Unknown	0.515966
+Gene42	Unknown	0.623967
+Gene43	Unknown	0.500233
+Gene44	Unknown	0.532122
+Gene45	Unknown	0.59761
+Gene46	Unknown	0.517282
+Gene47	Unknown	0.594077
+Gene48	Unknown	0.580451
+Gene49	Unknown	0.506909
+Gene50	Unknown	0.514261
+Gene51	Unknown	0.526636
+Gene52	Unknown	0.500357
+Gene53	Unknown	0.511694
