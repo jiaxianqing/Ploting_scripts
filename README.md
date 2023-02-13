@@ -1,11 +1,26 @@
 # Ploting_scripts
+
+
 R scripts for image ploting. 
 
+- [Scripts](#scripts)
+    + [1. Plot blocks](#1-plot-blocks)
+    + [2. Plot stacked histogram with error bars](#2-plot-stacked-histogram-with-error-bars)
+    + [3. Plot multiple ordinates](#3-plot-multiple-ordinates)
+    + [4. Plot broken axis](#4-plot-broken-axis)
+    + [5. Plot pie and donut](#5-plot-pie-and-donut)
+    + [6. Plot heatmap](#6-plot-heatmap)
+    + [7. Plot volcano diagram](#7-plot-volcano-diagram)
+    + [8. Plot barplot with scatter](#8-plot-barplot-with-scatter)
+    + [9. Plot circular barplot](#9-plot-circular-barplot)
+    + [10. Plot flat violin with scatter](#10-plot-flat-violin-with-scatter)
+    + [11. Plot interaction](#11-plot-interaction)
 ---
 
-* `plot.blocks.R`  
+# Scripts
+### 1. Plot blocks
 
-Plot blocks (genome segments, centromere region or gene location)
+`plot.blocks.R` Plot blocks (genome segments, centromere region or gene location)
  
 ```
 # Prepare input data
@@ -29,9 +44,9 @@ Rscript plot.blocks.R \
 
 ---
 
-* `stacked_histogram.error_bar.R`
+### 2. Plot stacked histogram with error bars
  
- Plot stacked histogram with error bars and compare two sets of them. (Used in my paper [Jia et al., 2020](http://www.sciencedirect.com/science/article/pii/S0176161720300298))
+`stacked_histogram.error_bar.R` Plot stacked histogram with error bars and compare two sets of them. (Used in my paper [Jia et al., 2020](http://www.sciencedirect.com/science/article/pii/S0176161720300298))
 ```
     library(lattice)
     library(plyr)
@@ -93,9 +108,9 @@ Rscript plot.blocks.R \
 
 ---
 
-* `plot_multi_ordinates.R` 
+### 3. Plot multiple ordinates
 
-Plot multiple ordinates image. (Used in my paper [Jia et al., 2019](https://onlinelibrary.wiley.com/doi/abs/10.1111/tpj.14154))
+`plot_multi_ordinates.R` Plot multiple ordinates image. (Used in my paper [Jia et al., 2019](https://onlinelibrary.wiley.com/doi/abs/10.1111/tpj.14154))
 
 ```
     #!plot CO(line), TE number(line), markers(bar)
@@ -146,9 +161,8 @@ Plot multiple ordinates image. (Used in my paper [Jia et al., 2019](https://onli
 
 ---
 
-* `plot_break_axis.R`
-
-Plot histogram with break y axis.
+### 4. Plot broken axis
+`plot_break_axis.R` Plot histogram with break y axis.
 ```
  library(Rmisc)
  library(ggplot2)
@@ -190,7 +204,8 @@ Plot histogram with break y axis.
 
 ---
 
-* `plot_pie_donut.R`
+### 5. Plot pie and donut
+`plot_pie_donut.R`
 ```
  library(ggplot2)
  data <- data.frame(category = c('A','B','C','D','E'), 
@@ -240,7 +255,8 @@ Plot histogram with break y axis.
 
 ---
 
-* `plot_heatmap.R`
+### 6. Plot heatmap
+`plot_heatmap.R`
 ```
  library(ggplot2)
  library(reshape2)
@@ -271,7 +287,8 @@ Plot histogram with break y axis.
 
 ---
 
-* `plot_volcano_diagram.R`
+### 7. Plot volcano diagram
+`plot_volcano_diagram.R`
 ```
 library(ggplot2)
 library(ggthemes)
@@ -296,17 +313,175 @@ ggplot(deg, aes(x = log2FoldChange, y = -log10(pvalue)))+
        y=expression(paste(-log[10], "(", italic(P), " ", value, ")", sep="")))+
   theme_bw()
 ggsave(filename = "ARF3_data.pdf", heigh = 6, width =6, device = "pdf")
-
-
 ```
 <img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/volcano_plot.jpg" div align = "center" width="40%" height="40%" />
 
 ---
+
+### 8. Plot barplot with scatter
+
+`Plot_barplot_scatter.R` [Jia et al., 2023](https://www.cell.com/molecular-plant/abstract/S1674-2052(22)00437-3)
+```
+library(Rmisc)
+library(tidyverse)
+library(ggthemes)
+library(reshape2)
+library(ggsci)
+library(ggpubr)
+
+rm(list=ls())
+df <- read.table("Plot_barplot_scatter.txt", header = T, sep = "\t")
+
+df.mod <- melt(df, id.vars = c('Type', 'Gene', "Rep"), variable.name = 'Treat', value.name = 'Value')
+
+df.se <- summarySE(df.mod,  measurevar="Value", groupvars=c("Type", "Gene", "Treat"))
+write.table(df.se, file = "Figure 2e.data.se.txt", sep="\t", quote=F, row.names=F, col.names=T)
+df.se <- read.table(pipe("pbpaste"), header = T, sep = "\t")
+
+ggplot(df.se, aes(x=Treat, y=Value, fill=Treat)) +
+  facet_grid( .~ Gene+Type, scales = "free_x",space="free_x")+
+  geom_bar(aes(x=Treat, y=Value, fill=Treat), stat="identity", position="dodge", width=.7, size=.25) +
+  geom_point(data=df.mod, aes(Treat, Value), position=position_dodge(0.9), color = "#666666", shape = 1, alpha=1, size = 1.5)+
+  geom_errorbar(data=df.se,aes(x=Treat, ymin=Value, ymax=Value+se), position=position_dodge(0.9), width=.25, size=0.4) +
+  theme_few()+
+  ylab("Relative promoter activity") +
+  xlab(NULL)+
+  theme(strip.background = element_rect(fill = "transparent"),
+        axis.text.x = element_text(angle = 45, hjust = 0.4, color = "black", vjust = 0.5),
+        axis.text.y = element_text(color = "black"),
+        legend.position="none")
+ggsave(file = "Plot_barplot_scatter.pdf", height = 3, width =3.8, dpi = 300, device = "pdf")
+```
+<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/Plot_barplot_scatter.png" div align = "center" width="40%" height="40%" />
+
+---
+
+### 9. Plot circular barplot
+`Plot_circular_barplot.R`[Jia et al., 2023](https://www.cell.com/molecular-plant/abstract/S1674-2052(22)00437-3)
+```
+library(tidyverse)
+library(ggsci)
+
+rm(list=ls())
+data <- read.table("Plot_circular_barplot.txt", sep = "\t", header = T)
+
+data$id <- seq(1, nrow(data))
+
+# Get the name and the y position of each label
+label_data <- data
+number_of_bar <- nrow(label_data)
+angle <- 90 - 360 * (label_data$id-0.5) /number_of_bar     
+label_data$hjust <- ifelse( angle < -90, 1, 0)
+label_data$angle <- ifelse(angle < -90, angle+180, angle)
+
+# prepare a data frame for base lines
+empty_bar=2
+base_data <- data %>% 
+  group_by(Group) %>% 
+  summarize(start=min(id), end=max(id) - empty_bar) %>% 
+  rowwise() %>% 
+  mutate(title=mean(c(start, end)))
+
+# prepare a data frame for grid (scales)
+grid_data <- base_data
+grid_data$end <- grid_data$end[ c( nrow(grid_data), 1:nrow(grid_data)-1)] + 1
+grid_data$start <- grid_data$start - 1
+grid_data <- grid_data[-1,]
+
+# Make the plot
+ggplot(data, aes(x=as.factor(id), y=Average, fill=Treatment)) +
+  geom_bar(aes(x=as.factor(id), y=Average, fill=Treatment), stat="identity") +
+  geom_errorbar(aes(x=as.factor(id), ymin=Average, ymax=Average+SD), width=.25, size=0.4) +
+  #geom_hline(yintercept = c(0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75))+
+  ylim(-1.5, 2.5) +
+  theme_minimal() +
+  #scale_fill_lancet()+
+  theme(
+    #legend.position = "none",
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    plot.margin = unit(rep(-1,4), "cm") 
+  ) +
+  coord_polar() + 
+  geom_segment(data=base_data, aes(x = start, y = -0.05, xend = end, yend = -0.05), colour = "black", alpha=0.8, size=0.6 , inherit.aes = FALSE )  +
+  geom_text(data=base_data, aes(x = title, y = -0.1, label=Group), hjust=c(1,1,0,0), colour = "black", alpha=0.8, size=4, fontface="bold", inherit.aes = FALSE)
+
+ggsave(filename = "Plot_circular_barplot.pdf", heigh = 2.5, width = 3.2, device = "pdf")
+```
+<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/Plot_circular_barplot.png" div align = "center" width="30%" height="30%" />
+
+---
+
+### 10. Plot flat violin with scatter
+`Plot_flat_violin_scatter.R`
+```
+library(tidyverse)
+library(ggsci)
+library(reshape2)
+library(ggthemes)
+library(Rmisc)
+library(ggsci)
+library(ggpubr)
+source( './geom_flat_violin.R' )
+
+rm(list=ls())
+
+data <- read.table("Plot_flat_violin_scatter.txt", sep = "\t", header = T)
+data.mod <- melt(data, id.vars = c('Area'), variable.name = 'Trait', value.name = 'Value')
+data.mod <- data.mod %>% drop_na(Value)
+
+ggplot(data.mod, aes(x=Area, y=Value)) +
+  geom_flat_violin(aes(fill=Area),position=position_nudge(x=.1),color="black",size=0.25) +
+  geom_jitter(aes(color=Area), width=0.02, size=0.25) +
+  geom_boxplot(width=.1, position=position_nudge(x=0.1), fill="white", size=0.25) +
+  ylab("") +
+  xlab("")+
+  theme_few() +
+  scale_fill_lancet()+
+  scale_color_lancet()+
+  theme(strip.background = element_rect(fill = "transparent"),
+        axis.text.x = element_text(hjust = 0.4, color = "black", vjust = 0.5),
+        axis.text.y = element_text(color = "black"),
+        legend.position="none")
+ ggsave(file = "Plot_flat_violin_scatter.pdf", height = 2.5, width = 1.8, dpi = 300, device = "pdf")
+```
+<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/Plot_flat_violin_scatter.png" div align = "center" width="20%" height="20%" />
+
+---
+
+### 11. Plot interaction
+`Plot_interaction.R`
+```
+library(ggraph)
+library(igraph)
+library(RColorBrewer)
+
+edges <- read.table("Plot_interaction_edges.txt", header = T, sep = "\t")
+vertices <- read.table("Plot_interaction_vertices.txt", header = T, sep = "\t")
+
+mygraph<-graph_from_data_frame(edges,vertices=vertices)
+
+ggraph(mygraph,layout='dendrogram',circular=T)+
+  geom_edge_diagonal(colour="grey")+
+  geom_node_point(aes(filter=leaf, size=value, color=group),alpha=0.6)+
+  scale_edge_colour_distiller(palette = "RdPu") +
+  geom_node_text(aes(x = x*1.2, y=y*1.2, filter = leaf, label=name, 
+                     angle = -((-node_angle(x,y) + 90) %% 180) + 90, colour=group), 
+                 position = "identity", size=2.7) +
+  scale_colour_manual(values= rep(brewer.pal(9, "Paired") , 30)) +
+  theme_void()+
+  coord_fixed()
+
+ggsave(file = "Plot_interaction.pdf", height = 6, width = 6, dpi = 300, device = "pdf")
+```
+<img src="https://github.com/jiaxianqing/Ploting_scripts/blob/master/examples/Plot_interaction.png" div align = "center" width="40%" height="40%" />
+
+---
+
 P.S. 
 We all love ggplot2! A great tutorial for ggplot2: [Top50-Ggplot2-Visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html).
 
-PP.S.These R scripts are frequently-used in my data visualization. I will update more. @2021-06-09
+Xianqing Jia, jiaxq.nju@gmail.com
 
-</br>
-Xianqing Jia   
-jiaxq.nju@gmail.com
+Updated: 2023-02-13
